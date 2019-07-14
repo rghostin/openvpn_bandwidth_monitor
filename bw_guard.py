@@ -13,7 +13,7 @@ from requests import post
 import threading
 
 # settings
-API_KEY = None
+API_KEY = 'Ex4mpl3_K3y'
 API_ENDPOINT = 'https://example.com/API/bw_update.php'
 TCP_STATUSFILE = '/etc/openvpn/openvpn-status-tcp.log'
 UDP_STATUSFILE = '/etc/openvpn/openvpn-status-udp.log'
