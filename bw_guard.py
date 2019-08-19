@@ -38,11 +38,12 @@ class BWGuard:
     def client_entry_generator(fileobj):
         """ generator that yields client entries of statuslog file for lazy file reading """
         while True:
-			line = fileobj.readline()
-			if not line:
-				return
-			if line.startswith('CLIENT_LIST'):
-				yield line.strip()
+            line = fileobj.readline()
+            if not line:
+                return
+            if line.startswith('CLIENT_LIST'):
+                yield line.strip()
+
         
     def fetch_curr_users(self):
 	""" Update the list of current connected users """
