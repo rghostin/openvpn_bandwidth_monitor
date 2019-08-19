@@ -17,7 +17,7 @@ API_KEY = 'Ex4mpl3_K3y'
 API_ENDPOINT = 'https://example.com/API/bw_update.php'
 TCP_STATUSFILE = '/etc/openvpn/openvpn-status-tcp.log'
 UDP_STATUSFILE = '/etc/openvpn/openvpn-status-udp.log'
-PERIOD = 10         # period of updates
+PERIOD = 10         # period of updates (sec)
 
 
 class User:
@@ -38,11 +38,11 @@ class BWGuard:
     def client_entry_generator(fileobj):
         """ generator that yields client entries of statuslog file for lazy file reading """
         while True:
-		line = fileobj.readline()
-		if not line:
-			return
-		if line.startswith('CLIENT_LIST'):
-			yield line.strip()
+			line = fileobj.readline()
+			if not line:
+				return
+			if line.startswith('CLIENT_LIST'):
+				yield line.strip()
         
     def fetch_curr_users(self):
 	""" Update the list of current connected users """
