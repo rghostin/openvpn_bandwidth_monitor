@@ -33,7 +33,31 @@ class BWGuard:
         self.t = t
         self.old_users = {}
         self.curr_users = {}
+    
+    """
+    # lazy file reading using a generator
+    
+    def client_entry_generator(self, fileobj):
+        # generator that yields client entries of statuslog file
+        while True:
+			line = fileobj.readline()
+			if not line:
+				return
+			if line.startswith('CLIENT_LIST'):
+				yield line.strip()
+        
 
+	def fetch_curr_users(self):
+			# Update the list of current connected users
+			self.curr_users.clear()
+			with open(self.statusfile, 'r') as f:
+				for entry in client_entry_generator(f):
+					entry_list = entry.split(',')
+					username = entry_list[9]
+					user = User(username=username, b_recv=int(entry_list[5]), b_sent=int(entry_list[6]))
+					self.curr_users[username] = user
+    """
+    
     def _get_client_entries(self):
         """ Fetch entries of client list in log file """
         with open(self.statusfile, 'r') as f:
@@ -45,10 +69,10 @@ class BWGuard:
         self.curr_users.clear()
         c_entries = self._get_client_entries()
         for entry in c_entries:
-            e = entry.split(',')
-            username = e[9]
-            u = User(username=username, b_recv=int(e[5]), b_sent=int(e[6]))
-            self.curr_users[username] = u
+            entry_list = entry.split(',')
+            username = entry_list[9]
+            user = User(username=username, b_recv=int(entry_list[5]), b_sent=int(entry_list[6]))
+            self.curr_users[username] = user
 
     def get_disconnected_usernames(self):
         """ Compute disconnected users"""
